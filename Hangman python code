@@ -1,0 +1,51 @@
+# Import the random module
+import random
+
+# Define a list of possible words
+words = ["apple", "banana", "cherry", "dragon", "elephant", "flower", "giraffe", "honey", "icecream", "jungle"]
+
+# Choose a random word from the list
+word = random.choice(words)
+
+# Initialize the number of guesses and the hidden word
+guesses = 10
+hidden = "_" * len(word)
+
+# Print the instructions and the hidden word
+print("Welcome to Hangman!")
+print("You have to guess the word by choosing letters.")
+print("You have", guesses, "guesses left.")
+print(hidden)
+
+# Start the game loop
+while guesses > 0 and hidden != word:
+
+    # Get the user's guess
+    guess = input("Enter a letter: ").lower()
+
+    # Check if the guess is valid
+    if len(guess) != 1 or not guess.isalpha():
+        print("Invalid input. Please enter a single letter.")
+        continue
+
+    # Check if the guess is correct
+    if guess in word:
+        print("Good guess!")
+        # Update the hidden word
+        for i in range(len(word)):
+            if word[i] == guess:
+                hidden = hidden[:i] + guess + hidden[i+1:]
+    else:
+        print("Sorry, that letter is not in the word.")
+        # Reduce the number of guesses
+        guesses -= 1
+
+    # Print the number of guesses and the hidden word
+    print("You have", guesses, "guesses left.")
+    print(hidden)
+
+# Check if the user won or lost
+if hidden == word:
+    print("Congratulations! You guessed the word:", word)
+else:
+    print("You ran out of guesses. The word was:", word)
